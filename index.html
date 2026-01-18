@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт с фоновым видео</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 300px;
+            padding: 25px;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            padding-bottom: 8px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .features li i {
+            color: #ffcc00;
+            margin-right: 10px;
+        }
+
+        .video-controls {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 10px;
+            background-color: rgba(255, 204, 0, 0.8);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #ffcc00;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .video-info {
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .card {
+                min-width: 100%;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="VID_20260118_122336_037.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео тег.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Сайт с фоновым видео</h1>
+            <p class="subtitle">Этот сайт демонстрирует использование видео в качестве фона с текстовым содержимым поверх него. Видео создает динамичный и привлекательный фон для любого контента.</p>
+        </header>
+
+        <div class="content">
+            <div class="card">
+                <h2>О технологии</h2>
+                <p>Фоновые видео на сайтах стали популярным дизайнерским решением, которое позволяет привлечь внимание посетителей и создать уникальную атмосферу.</p>
+                <p>Видео на заднем плане добавляет динамичности, но должно быть оптимизировано, чтобы не замедлять загрузку страницы.</p>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Автовоспроизведение и зацикливание</li>
+                    <li><i class="fas fa-check-circle"></i> Адаптивность под все экраны</li>
+                    <li><i class="fas fa-check-circle"></i> Низкая нагрузка на производительность</li>
+                    <li><i class="fas fa-check-circle"></i> Затемнение для лучшей читаемости текста</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Преимущества</h2>
+                <p>Использование видео в качестве фона имеет ряд преимуществ по сравнению с традиционными статичными фонами.</p>
+                <p>Видео способно передать больше эмоций и создать более глубокое погружение в контент сайта, особенно когда речь идет о презентации продуктов или услуг.</p>
+                <ul class="features">
+                    <li><i class="fas fa-star"></i> Повышение вовлеченности пользователей</li>
+                    <li><i class="fas fa-star"></i> Улучшение визуального восприятия</li>
+                    <li><i class="fas fa-star"></i> Увеличение времени пребывания на сайте</li>
+                    <li><i class="fas fa-star"></i> Создание уникального пользовательского опыта</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Рекомендации</h2>
+                <p>При использовании фонового видео важно соблюдать несколько правил, чтобы не ухудшить пользовательский опыт.</p>
+                <p>Видео должно быть коротким, оптимизированным, без резких переходов и с нейтральным содержанием, которое не будет отвлекать от основного контента.</p>
+                <ul class="features">
+                    <li><i class="fas fa-lightbulb"></i> Используйте короткие видео (15-30 секунд)</li>
+                    <li><i class="fas fa-lightbulb"></i> Добавляйте затемняющий оверлей</li>
+                    <li><i class="fas fa-lightbulb"></i> Отключайте звук или делайте его опциональным</li>
+                    <li><i class="fas fa-lightbulb"></i> Тестируйте на мобильных устройствах</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="video-controls">
+            <h2>Управление видео</h2>
+            <p>Вы можете управлять воспроизведением фонового видео с помощью кнопок ниже:</p>
+            <button class="btn" id="play-btn"><i class="fas fa-play"></i> Воспроизвести видео</button>
+            <button class="btn" id="pause-btn"><i class="fas fa-pause"></i> Приостановить видео</button>
+            <button class="btn" id="mute-btn"><i class="fas fa-volume-mute"></i> Отключить звук</button>
+            <p class="video-info">Текущее видео: VID_20260118_122336_037.mp4</p>
+        </div>
+
+        <footer>
+            <p>© 2024 Сайт с фоновым видео. Все права защищены.</p>
+            <p>Это демонстрационный сайт, созданный для показа возможностей HTML5 и CSS3.</p>
+        </footer>
+    </div>
+
+    <script>
+        const video = document.getElementById('background-video');
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const muteBtn = document.getElementById('mute-btn');
+
+        playBtn.addEventListener('click', () => {
+            video.play();
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Воспроизведение...';
+            setTimeout(() => {
+                playBtn.innerHTML = '<i class="fas fa-play"></i> Воспроизвести видео';
+            }, 1500);
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            video.pause();
+            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Видео приостановлено';
+            setTimeout(() => {
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Приостановить видео';
+            }, 1500);
+        });
+
+        let isMuted = true;
+        muteBtn.addEventListener('click', () => {
+            if (isMuted) {
+                video.muted = false;
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i> Включить звук';
+                isMuted = false;
+            } else {
+                video.muted = true;
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i> Отключить звук';
+                isMuted = true;
+            }
+        });
+
+        // Автовоспроизведение видео при загрузке
+        window.addEventListener('load', () => {
+            video.play().catch(error => {
+                console.log("Автовоспроизведение заблокировано браузером. Пользователь должен взаимодействовать со страницей.");
+            });
+        });
+    </script>
+</body>
+</html>
